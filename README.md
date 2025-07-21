@@ -22,19 +22,28 @@ A lightweight Python bot that monitors Archive of Our Own (AO3) RSS feeds and po
 
 ## 🚀 Getting Started
 
-### 1. Clone the Repo
+### 1. Enable Keep-Alive (Replit Users Only)
+
+If hosting on Replit, ensure you:
+- Create a `keep_alive.py` file with a minimal Flask server.
+- Call `keep_alive()` in your `main.py` to prevent the bot from sleeping.
+- Set up UptimeRobot (or similar) to ping your Replit URL every 5 minutes.
+
+This will keep your bot online 24/7 on Replit's free plan.
+
+### 2. Clone the Repo
 
 ```bash
 git clone https://github.com/your-username/your-repo.git
 ```
 
-### 2. Install Dependencies
+### 3. Install Dependencies
 
 ```bash
 pip install discord.py feedparser beautifulsoup4
 ```
 
-### 3. Configure the Bot
+### 4. Configure the Bot
 
 In `main.py`, update:
 
@@ -44,7 +53,7 @@ In `main.py`, update:
 - `MOD_ROLE_IDS`: Set of role IDs allowed to moderate and manage tags.
 - `FEED_URLS`: List of AO3 feed URLs to monitor.
 
-### 4. Run the Bot
+### 5. Run the Bot
 
 ```bash
 python main.py
