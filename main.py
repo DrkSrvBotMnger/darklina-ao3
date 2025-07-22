@@ -6,10 +6,6 @@ import html
 from bs4 import BeautifulSoup 
 import json 
 import os
-from keep_alive import keep_alive
-
-# Keep Replit awake:
-keep_alive()
 
 TOKEN = os.getenv("DISCORD_TOKEN")
 CHANNEL_ID = 1396706292793348176 # Replace with public feed channel ID ADMIN_CHANNEL_ID = 
@@ -228,7 +224,7 @@ class FicReviewView(discord.ui.View):
 
 # --- Bot Loop ---
 
-@tasks.loop(minutes=30)
+@tasks.loop(hours=1)
 async def check_rss_feeds():
     for url in FEED_URLS:
         feed = feedparser.parse(url)
