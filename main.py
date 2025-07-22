@@ -320,5 +320,5 @@ async def on_ready():
     print(f"Logged in as {bot.user}")
     await bot.tree.sync()
     check_rss_feeds.start()
-
+    
 bot.run(TOKEN)
