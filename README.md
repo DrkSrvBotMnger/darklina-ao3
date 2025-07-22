@@ -6,7 +6,7 @@ A lightweight, automated Discord bot that monitors one or multiple Archive of Ou
 
 ## 📦 Features
 
-- Automatically checks AO3 RSS feeds at set intervals (default: every 6 hours).
+- Automatically checks AO3 RSS feeds at set intervals (default: every 1 hour).
 - Posts fanfics in a designated Discord channel using rich embeds.
 - Color-coded embeds based on fic rating.
 - Displays fic metadata: author, series (if any), summary, words, chapters, ratings, warnings, fandoms, relationships, characters, and tags.
