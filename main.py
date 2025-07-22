@@ -44,7 +44,7 @@ def extract_links_and_raw(li):
         href = a.get('href')
         raw_items.append(name)
         if href:
-            full_link = f"https://archiveofourown.org{href}"
+            full_link = f"{href}"
             display_items.append(f"[{name}]({full_link})")
         else:
             display_items.append(name)
@@ -69,7 +69,7 @@ def parse_fic_metadata(summary_html):
             if series_link:
                 name = series_link.text.strip()
                 href = series_link.get('href')
-                metadata['series'] = (name, f"https://archiveofourown.org{href}")
+                metadata['series'] = (name, f"{href}")
             break
     for li in soup.find_all('li'):
         label = li.text.split(':')[0].strip()
