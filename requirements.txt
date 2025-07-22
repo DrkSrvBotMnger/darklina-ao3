@@ -1,3 +1,5 @@
 discord.py
 feedparser
 beautifulsoup4
+sqlalchemy
+psycopg2-binary
