@@ -14,12 +14,19 @@ MOD_ROLE_IDS = {930538612754382869, 849835131182383145, 1386917677389582427, 139
 FEED_URLS = [ "https://archiveofourown.org/tags/31915957/feed.atom" ]
 
 BLOCKED_WARNINGS = {"Underage Sex"}
-BLOCKED_TAGS = {"Grooming", "Bestiality", "Modern AU", "he can be a little fucked up"}
+BLOCKED_TAGS_FILE = "blocked_tags.json"
 
 POSTED_LOG = "posted_fics.json"
 DENIED_LOG = "denied_fics.json"
 
-# Load persistent logs
+# Load persistent blocked tags and logs
+
+if os.path.exists(BLOCKED_TAGS_FILE):
+    with open(BLOCKED_TAGS_FILE, 'r') as f:
+        BLOCKED_TAGS = set(json.load(f))
+else:
+    BLOCKED_TAGS = set()
+
 if os.path.exists(POSTED_LOG):
     with open(POSTED_LOG, 'r') as f:
         posted_fics = set(json.load(f))
@@ -36,6 +43,9 @@ intents = discord.Intents.default()
 bot = commands.Bot(command_prefix="!", intents=intents)
 
 # --- Helper Functions ---
+def save_blocked_tags():
+    with open(BLOCKED_TAGS_FILE, 'w') as f:
+        json.dump(list(BLOCKED_TAGS), f)
 
 def save_logs():
     with open(POSTED_LOG, 'w') as f:
@@ -267,8 +277,10 @@ async def block_tag(interaction: discord.Interaction, tag: str):
     if not any(role.id in MOD_ROLE_IDS for role in interaction.user.roles):
         await interaction.response.send_message("❌ You are not authorized to manage blocked tags.", ephemeral=True)
         return
-
+        
     BLOCKED_TAGS.add(tag)
+    save_blocked_tags()
+    
     admin_channel = bot.get_channel(ADMIN_CHANNEL_ID)
     await admin_channel.send(f"🚫 **{tag}** was added to the blocked tags by **{interaction.user.display_name}**.")
     await interaction.response.send_message(f"✅ Tag **{tag}** has been added to the blocked list.", ephemeral=True)
@@ -282,6 +294,8 @@ async def unblock_tag(interaction: discord.Interaction, tag: str):
 
     if tag in BLOCKED_TAGS:
         BLOCKED_TAGS.remove(tag)
+        save_blocked_tags()
+
         admin_channel = bot.get_channel(ADMIN_CHANNEL_ID)
         await admin_channel.send(f"✅ **{tag}** was removed from the blocked tags by **{interaction.user.display_name}**.")
         await interaction.response.send_message(f"✅ Tag **{tag}** has been removed from the blocked list.", ephemeral=True)

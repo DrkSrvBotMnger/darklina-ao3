@@ -1,94 +1,98 @@
 # AO3 RSS Feed Discord Bot
 
-A lightweight Python bot that monitors Archive of Our Own (AO3) RSS feeds and posts new fics in a Discord channel. Supports dynamic content filtering and moderator review.
+A lightweight, automated Discord bot that monitors one or multiple Archive of Our Own (AO3) RSS feeds and posts new fics in a designated channel. Includes automatic content filtering and moderator approval features.
 
 ---
 
 ## 📦 Features
 
-- Automatically posts AO3 fics in a designated Discord channel.
+- Automatically checks AO3 RSS feeds at set intervals (default: every 6 hours).
+- Posts fanfics in a designated Discord channel using rich embeds.
 - Color-coded embeds based on fic rating.
-- Displays fic metadata: author, series (if any), summary, words, chapters, and tags (all clickable).
-- Filters based on:
-  - **Hard-blocked warnings** (auto-block with no override).
-  - **Soft-blocked tags** (requires moderator approval via buttons).
-- Slash commands for moderators to:
-  - Add/remove blocked tags.
-  - View current blocked tags.
-- Interactive Approve/Deny buttons for blocked fics.
-- Tracks posted and denied fics to prevent reposts.
+- Displays fic metadata: author, series (if any), summary, words, chapters, ratings, warnings, fandoms, relationships, characters, and tags.
+- Supports content filtering via:
+  - **Hard-blocked warnings** (automatic block).
+  - **Soft-blocked tags** (requires moderator review and approval).
+- Interactive Approve/Deny buttons in the mod/admin review channel.
+- Persistent log of posted and denied fics to prevent reposts.
+- Persistent blocked tags list across restarts.
+- Simple slash commands for moderators to manage blocked tags.
 
 ---
 
-## 🚀 Getting Started
+## 🚀 Setup Instructions
 
-### 1. Clone the Repo
+### 1. Dependencies
 
-```bash
-git clone https://github.com/your-username/your-repo.git
+Ensure `requirements.txt` includes:
+
+```
+discord.py
+feedparser
+beautifulsoup4
 ```
 
-### 2. Install Dependencies
+Install with:
 
 ```bash
-pip install discord.py feedparser beautifulsoup4
+pip install -r requirements.txt
 ```
 
-### 3. Configure the Bot
+### 2. Configuration
 
-In `main.py`, update:
+In `main.py`, configure:
 
-- `DISCORD_TOKEN`: Use environment variables to keep it secure.
-- `CHANNEL_ID`: ID of your public feed channel.
-- `ADMIN_CHANNEL_ID`: ID of your private admin/mod channel.
-- `MOD_ROLE_IDS`: Set of role IDs allowed to moderate and manage tags.
+- `DISCORD_TOKEN`: Provided as an environment variable.
+- `CHANNEL_ID`: Discord channel ID where fics are publicly posted.
+- `ADMIN_CHANNEL_ID`: Private admin/mod channel for approvals and logs.
+- `MOD_ROLE_IDS`: Set of role IDs allowed to approve/deny fics and manage tags.
 - `FEED_URLS`: List of AO3 feed URLs to monitor.
+- `BLOCKED_WARNINGS`: List of warnings that result in automatic blocking.
 
-### 4. Run the Bot
+### 3. Persistent Files
 
-```bash
-python main.py
-```
+- `blocked_tags.json`: Stores current blocked tags persistently.
+- `posted_fics.json`: Tracks posted fic IDs to avoid reposting.
+- `denied_fics.json`: Tracks denied fic IDs to avoid re-reviewing.
 
----
-
-## ⚙️ Slash Commands
-
-- `/blocktag <tag>`: Add a tag to the blocked tags.
-- `/unblocktag <tag>`: Remove a tag from the blocked tags.
-- `/showblockedtags`: View the current blocked tags list.
-
-> Note: Commands auto-sync at startup.
+Ensure these files exist and contain valid JSON (use empty lists as initial content).
 
 ---
 
-## 📁 Persistent Files
+## 🛠️ Slash Commands (Mods Only)
 
-- `posted_fics.json`: Tracks posted fics.
-- `denied_fics.json`: Tracks denied fics.
+- `/blocktag <tag>`: Adds a tag to the blocked tags list.
+- `/unblocktag <tag>`: Removes a tag from the blocked tags list.
+- `/showblockedtags`: Displays the current list of blocked tags.
 
-These ensure that fics aren’t reposted even if the bot restarts.
+All tag changes persist automatically across bot restarts.
 
 ---
 
 ## 🔐 Security & Permissions
 
-- Keep the Discord bot token secure using environment variables (e.g., `DISCORD_TOKEN`).
-- Use minimal Discord permissions:
+- Use environment variables to store your `DISCORD_TOKEN` securely.
+- Restrict slash commands using `MOD_ROLE_IDS`.
+- Bot requires only essential Discord permissions:
   - Send Messages
   - Embed Links
   - Use Slash Commands
-  - Read Message History (optional)
+
+---
+
+## 📈 Planned Improvements
+
+- Command to add or remove feed (for events).
+- Multi-feed/channel support (for easier testing and debbuging).
+- Persistent blocked warnings management.
 
 ---
 
 ## 📄 License
 
-This project is licensed under the **GNU General Public License v3.0 (GPL-3.0)**.
-
-See the [LICENSE](LICENSE) file for details.
+Licensed under the GNU General Public License v3.0 (GPL-3.0).
 
 ---
 
 _Last updated: [2025-07-21]_
-_By: NessaC
+_By: [NessaC]_
