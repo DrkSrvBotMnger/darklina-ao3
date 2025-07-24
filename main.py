@@ -11,8 +11,8 @@ from crud import (get_blocked_tags, add_blocked_tag, remove_blocked_tag,
                   log_posted_fic, log_denied_fic)
 
 TOKEN = os.getenv("DISCORD_TOKEN")
-CHANNEL_ID = 1396706292793348176 # Replace with public feed channel ID
-ADMIN_CHANNEL_ID = 1396934281762177225 # Replace with admin review channel ID
+CHANNEL_ID = 849836116479180810 # Replace with public feed channel ID
+ADMIN_CHANNEL_ID = 1392897816396955759 # Replace with admin review channel ID
 MOD_ROLE_IDS = {930538612754382869, 849835131182383145, 1386917677389582427, 1392541137415311410} # Replace with your mod/admin roles ID
 FEED_URLS = ["https://archiveofourown.org/tags/31915957/feed.atom"]
 BLOCKED_WARNINGS = {"Underage Sex"}
